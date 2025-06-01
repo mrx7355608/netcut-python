@@ -67,7 +67,6 @@ def block_device(device):
     gateway_ip = '192.168.0.1' # THIS IS HARDCODED GATEWAT, EITHER DETECT AUTOMATICALLY OR GET IT MANUALLY FROM USER
     gateway_mac = getmacbyip(gateway_ip)
 
-    print(f"[!] Starting ARP spoof to block {target_ip}... (Ctrl+C to stop)")
     try:
         while True:
             spoof(target_ip, target_mac, gateway_ip)
@@ -128,6 +127,8 @@ def main():
             # Block device
             user_input = int(user_input)
             device_to_block = devices[user_input - 1]
+
+            print(f"[!] Starting ARP spoof to block {device_to_block['ip']}... (Ctrl+C to stop)")
             blocked_devices.append(device_to_block)
             threading.Thread(target=block_device, args=(device_to_block,), daemon=True).start()
             continue
